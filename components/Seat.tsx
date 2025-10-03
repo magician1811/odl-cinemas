@@ -12,19 +12,8 @@ const Seat: React.FC<SeatProps> = ({ seat, status, onToggle }) => {
   const getSeatClasses = () => {
     let classes = 'w-6 h-6 md:w-8 md:h-8 rounded-t-md flex justify-center items-center font-bold text-xs transition duration-300 ease-in-out transform';
 
-    switch (seat.type) {
-      case 'premium':
-        classes += ' border-b-2 border-gold';
-        break;
-      case 'vip':
-        classes += ' border-2 border-yellow-400';
-        break;
-      case 'wheelchair':
-        classes += ' border-2 border-green-400';
-        break;
-      case 'aisle':
-        classes += ' border-l-4 border-r-4 border-gray-400';
-        break;
+    if (seat.type === 'premium') {
+      classes += ' border-b-2 border-gold';
     }
 
     switch (status) {

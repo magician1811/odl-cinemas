@@ -1,6 +1,4 @@
 
-import MovieDetailsPage from './pages/MovieDetailsPage';
-
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { BookingProvider } from './context/BookingContext';
@@ -31,7 +29,6 @@ const App: React.FC = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/theatres" element={<TheatresPage />} />
                 <Route path="/theatres/:theatreId" element={<MoviesPage />} />
-                <Route path="/movie/:movieId" element={<MovieDetailsPage />} />
                 <Route path="/seats/:theatreId/:movieId/:date/:showtime" element={<SeatSelectionPage />} />
                 <Route path="/payment" element={
                   <ProtectedRoute>

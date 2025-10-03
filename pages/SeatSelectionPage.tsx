@@ -103,13 +103,10 @@ const SeatSelectionPage: React.FC = () => {
         
         <div className="p-4 bg-gray-800/50 rounded-lg">
           <div className="flex flex-col items-center">
-             <div className="flex flex-col gap-2">
+            <div className="w-full h-2 bg-gray-500 rounded-md mb-2 text-center text-sm text-gray-300">SCREEN</div>
+             <div className="mt-4 flex flex-col gap-2">
                 {renderSeats()}
             </div>
-            <div className="mt-4 flex flex-col items-center w-full">
-                <span className="text-sm text-gray-400 mb-1 tracking-widest">SCREEN</span>
-                <div className="w-full h-1 bg-gray-500 rounded-md"></div>
-             </div>
           </div>
         </div>
         
@@ -118,9 +115,6 @@ const SeatSelectionPage: React.FC = () => {
             <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-t-sm bg-cyan-400"></div><span>Selected</span></div>
             <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-t-sm bg-gray-800"></div><span>Booked</span></div>
             <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-t-sm bg-gray-600 border-b-2 border-gold"></div><span>Premium</span></div>
-            <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-t-sm border-2 border-yellow-400"></div><span>VIP</span></div>
-            <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-t-sm border-2 border-green-400"></div><span>Wheelchair</span></div>
-            <div className="flex items-center gap-2"><div className="w-4 h-4 rounded-t-sm border-l-4 border-r-4 border-gray-400"></div><span>Aisle</span></div>
         </div>
       </div>
       
@@ -150,8 +144,6 @@ const SeatSelectionPage: React.FC = () => {
           </>
         )}
       </div>
-      
-
     </div>
   );
 };

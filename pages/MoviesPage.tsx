@@ -5,8 +5,6 @@ import { Movie, Theatre } from '../types';
 import { getMovies } from '../services/azureBlobService';
 import DateSelector from './components/DateSelector';
 import { THEATRES } from '../constants';
-import StarRating from '../components/StarRating';
-import { getReviewsForMovie } from '../services/reviewService';
 
 const MoviesPage: React.FC = () => {
   const { theatreId } = useParams<{ theatreId: string }>();
@@ -93,14 +91,7 @@ const MoviesPage: React.FC = () => {
               <img src={movie.posterUrl} alt={movie.title} className="w-full md:w-48 h-64 md:h-auto object-cover" />
               <div className="p-6 flex flex-col justify-between flex-grow">
                 <div>
-                  <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-                    {movie.title}
-                    {(() => {
-                      const reviews = getReviewsForMovie(movie.id);
-                      const avg = reviews.reduce((s, r) => s + r.rating, 0) / (reviews.length || 1);
-                      return <StarRating rating={avg} size={20} />;
-                    })()}
-                  </h2>
+                  <h2 className="text-3xl font-bold text-white mb-2">{movie.title}</h2>
                   <p className="text-gray-400 mb-4">
                     {movie.genre} • {movie.duration} • {movie.censorRating}
                   </p>
@@ -125,12 +116,6 @@ const MoviesPage: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                <Link
-                  to={`/movie/${movie.id}`}
-                  className="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-semibold px-4 py-2 rounded mb-4"
-                >
-                  View Details
-                </Link>
               </div>
             </div>
           );

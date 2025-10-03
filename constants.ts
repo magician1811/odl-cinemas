@@ -39,8 +39,6 @@ export const THEATRES: Theatre[] = [
         duration: '2h 44m',
         censorRating: 'U/A',
         dates: generateMovieDates(['10:00 AM', '01:30 PM', '05:00 PM', '09:30 PM']),
-        synopsis: 'Parthi, a mild-mannered cafe owner in Himachal, is forced to confront his violent past when a ruthless smuggler believes Parthi stole his contraband. What follows is a bloody game of cat and mouse.',
-        trailerUrl: 'https://www.youtube.com/embed/Po3jStA673E',
       },
       {
         id: 'movie-vikram',
@@ -50,8 +48,6 @@ export const THEATRES: Theatre[] = [
         duration: '2h 55m',
         censorRating: 'U/A',
         dates: generateMovieDates(['11:00 AM', '02:45 PM', '06:30 PM', '10:15 PM']),
-        synopsis: 'A black-ops squad led by Agent Amar investigates a series of masked vigilante killings that lead them into a deadly game against a powerful drug syndicate headed by Sandhanam.',
-        trailerUrl: 'https://www.youtube.com/embed/OKNXr0F-ye8',
       },
        {
         id: 'movie-jailer',
@@ -61,8 +57,6 @@ export const THEATRES: Theatre[] = [
         duration: '2h 48m',
         censorRating: 'U/A',
         dates: generateMovieDates(['09:30 AM', '01:00 PM', '04:30 PM', '08:00 PM']),
-        synopsis: 'Muthuvel Pandian, a retired jailer living peacefully with his family, is pulled back into violence when a ruthless gang kidnaps his son.',
-        trailerUrl: 'https://www.youtube.com/embed/ekb3mWm07Kk',
       }
     ],
   },
@@ -80,8 +74,6 @@ export const THEATRES: Theatre[] = [
         duration: '2h 47m',
         censorRating: 'U',
         dates: generateMovieDates(['10:30 AM', '02:15 PM', '06:00 PM', '09:45 PM']),
-        synopsis: 'In the 10th century, warrior prince Vandiyathevan journeys across the Chola kingdom to deliver a warning of civil war while conspiracies threaten the throne.',
-        trailerUrl: 'https://www.youtube.com/embed/6L6XqWoS8tw',
       },
        {
         id: 'movie-vikram',
@@ -100,8 +92,6 @@ export const THEATRES: Theatre[] = [
         duration: '2h 59m',
         censorRating: 'U/A',
         dates: generateMovieDates(['11:15 AM', '03:00 PM', '07:00 PM', '10:30 PM']),
-        synopsis: 'Alcoholic professor JD is assigned to a juvenile school where he confronts Bhavani, a gangster who uses the children for his criminal activities.',
-        trailerUrl: 'https://www.youtube.com/embed/UT3eHuHnsZ0',
       },
     ],
   },
@@ -126,31 +116,13 @@ export const generateSeats = (): Seat[] => {
   for (let i = 0; i < rows; i++) {
     const rowChar = String.fromCharCode(65 + i); // A, B, C...
     for (let j = 0; j < cols; j++) {
-      let seatType: SeatType;
-      if (premiumRows.includes(i)) {
-        seatType = SeatType.PREMIUM;
-      } else if (i === 0 && (j === 0 || j === cols - 1)) {
-        // Very first row corners could be VIP recliners
-        seatType = SeatType.VIP;
-      } else if (j === 0 || j === cols - 1) {
-        // Seats at extreme ends can be aisle seats (easy exit)
-        seatType = SeatType.AISLE;
-      } else if (i === rows - 1 && (j === 0 || j === 1)) {
-        // Last row first two seats reserved for wheelchair users
-        seatType = SeatType.WHEELCHAIR;
-      } else {
-        seatType = SeatType.STANDARD;
-      }
-
-      const basePrice = seatType === SeatType.PREMIUM ? SEAT_PRICE.premium : SEAT_PRICE.standard;
-      const priceMultiplier = seatType === SeatType.VIP ? 2 : seatType === SeatType.WHEELCHAIR ? 0.8 : 1;
-
+      const seatType = premiumRows.includes(i) ? SeatType.PREMIUM : SeatType.STANDARD;
       seats.push({
         id: `${rowChar}${j + 1}`,
         row: rowChar,
         number: j + 1,
         type: seatType,
-        price: Math.round(basePrice * priceMultiplier),
+        price: seatType === SeatType.PREMIUM ? SEAT_PRICE.premium : SEAT_PRICE.standard,
       });
     }
   }

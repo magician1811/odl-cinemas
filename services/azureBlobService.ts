@@ -1,10 +1,11 @@
-import { Movie } from '../types';
+import { Movie, Booking } from '../types';
 
 const MOVIES_CONTAINER = import.meta.env.VITE_AZURE_CONTAINER_NAME;
 const ACCOUNT = import.meta.env.VITE_AZURE_STORAGE_ACCOUNT;
 const SAS_TOKEN = import.meta.env.VITE_AZURE_SAS_TOKEN;
 
 const MOVIES_FILE = 'movies.json';
+const BOOKINGS_FILE = 'bookings.json';
 
 const sasToken = SAS_TOKEN?.startsWith('?') ? SAS_TOKEN : `?${SAS_TOKEN}`;
 
@@ -90,13 +91,55 @@ export const addMovie = async (movie: Movie): Promise<void> => {
   }
 };
 
-export const deleteMovie = async (movieId: string): Promise<void> => {
+// Booking related methods
+export const getBookings = async (): Promise<Booking[]> => {
   try {
-    const movies = await getMovies();
-    const updated = movies.filter((m) => m.id !== movieId);
-    await saveMovies(updated);
+    const response = await fetch(getBlobUrl(BOOKINGS_FILE));
+    
+    if (response.status === 404) {
+      // If bookings.json doesn't exist yet, return empty array
+      return [];
+    }
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch bookings');
+    }
+
+    const bookings = await response.json();
+    return bookings;
   } catch (error) {
-    console.error('Error deleting movie:', error);
+    console.error('Error fetching bookings:', error);
+    return [];
+  }
+};
+
+export const saveBookings = async (bookings: Booking[]): Promise<void> => {
+  try {
+    const response = await fetch(getBlobUrl(BOOKINGS_FILE), {
+      method: 'PUT',
+      headers: {
+        'x-ms-blob-type': 'BlockBlob',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookings),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save bookings');
+    }
+  } catch (error) {
+    console.error('Error saving bookings:', error);
+    throw error;
+  }
+};
+
+export const addBooking = async (booking: Booking): Promise<void> => {
+  try {
+    const bookings = await getBookings();
+    bookings.push(booking);
+    await saveBookings(bookings);
+  } catch (error) {
+    console.error('Error adding booking:', error);
     throw error;
   }
 };

@@ -16,8 +16,6 @@ export interface Movie {
   duration: string; // e.g., "2h 30m"
   censorRating: string; // e.g., "U", "U/A", "A"
   dates: MovieDate[]; // Available dates with showtimes
-  synopsis?: string; // Brief movie description (optional)
-  trailerUrl?: string; // YouTube or video URL for trailer (optional)
 }
 
 export interface Theatre {
@@ -37,9 +35,6 @@ export enum SeatStatus {
 export enum SeatType {
   STANDARD = 'standard',
   PREMIUM = 'premium',
-  VIP = 'vip',
-  WHEELCHAIR = 'wheelchair',
-  AISLE = 'aisle',
 }
 
 export interface Seat {
@@ -79,24 +74,4 @@ export interface User {
 export interface AuthUser {
   user: User;
   token: string;
-}
-
-
-export interface Coupon {
-  code: string;
-  description?: string;
-  discountType: 'flat' | 'percent';
-  amount: number; // flat: rupees, percent: %
-  usageLimit: number;
-  used: number;
-  expiresAt: string | null; // ISO string or null
-}
-
-export interface Review {
-  id: string;
-  movieId: string;
-  userId: string;
-  rating: number; // 1-5
-  comment: string;
-  createdAt: string;
 }
