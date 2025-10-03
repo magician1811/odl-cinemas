@@ -13,11 +13,20 @@ const DashboardPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      const userBookings = getUserBookings(user.id);
-      setBookings(userBookings);
-      setLoading(false);
-    }
+    const fetchBookings = async () => {
+      if (user) {
+        try {
+          const userBookings = await getUserBookings(user.id);
+          setBookings(userBookings);
+        } catch (error) {
+          console.error("Error fetching user bookings:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    
+    fetchBookings();
   }, [user]);
 
   const formatDate = (dateString: string) => {
