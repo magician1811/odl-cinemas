@@ -1,0 +1,5 @@
+{
+  "name": "ODL Cinemas - Movie Ticket Booking",
+  "description": "A sophisticated movie ticket booking application that allows users to browse theatres, select movies and showtimes, choose seats from an interactive map, and download a persistent PDF ticket with a QR code.",
+  "requestFramePermissions": []
+}
