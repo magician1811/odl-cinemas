@@ -16,6 +16,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import AdminPage from './pages/AdminPage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
 
 const App: React.FC = () => {
   return (
@@ -52,6 +53,7 @@ const App: React.FC = () => {
                     <AdminPage />
                   </ProtectedRoute>
                 } />
+                <Route path="/movie/:movieId" element={<MovieDetailsPage />} />
               </Routes>
             </main>
             <Footer />

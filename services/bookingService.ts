@@ -4,44 +4,23 @@ import { getBookings, addBooking as addBookingToBlob } from './azureBlobService'
 
 const BOOKINGS_KEY = 'odl-cinema-bookings';
 
-// Fallback to localStorage if Azure Blob Storage fails
+// Fetch all bookings exclusively from Azure Blob Storage. LocalStorage fallback removed to ensure centralized data.
 export const getAllBookings = async (): Promise<Booking[]> => {
   try {
-    // Try to get bookings from Azure Blob Storage
     const blobBookings = await getBookings();
     return blobBookings;
   } catch (error) {
-    console.error("Failed to get bookings from Azure Blob Storage, falling back to localStorage", error);
-    
-    // Fallback to localStorage
-    try {
-      const bookingsJson = localStorage.getItem(BOOKINGS_KEY);
-      return bookingsJson ? JSON.parse(bookingsJson) : [];
-    } catch (localError) {
-      console.error("Failed to parse bookings from localStorage", localError);
-      return [];
-    }
+    console.error("Failed to get bookings from Azure Blob Storage", error);
+    throw new Error('Unable to fetch bookings. Please check your network or configuration.');
   }
 };
 
 export const saveBooking = async (newBooking: Booking): Promise<void> => {
   try {
-    // Save to Azure Blob Storage
     await addBookingToBlob(newBooking);
-    
-    // Also save to localStorage as backup
-    const localBookings = localStorage.getItem(BOOKINGS_KEY);
-    const allBookings = localBookings ? JSON.parse(localBookings) : [];
-    allBookings.push(newBooking);
-    localStorage.setItem(BOOKINGS_KEY, JSON.stringify(allBookings));
   } catch (error) {
     console.error("Failed to save booking to Azure Blob Storage", error);
-    
-    // Fallback to just localStorage
-    const localBookings = localStorage.getItem(BOOKINGS_KEY);
-    const allBookings = localBookings ? JSON.parse(localBookings) : [];
-    allBookings.push(newBooking);
-    localStorage.setItem(BOOKINGS_KEY, JSON.stringify(allBookings));
+    throw new Error('Unable to save booking. Please try again later.');
   }
 };
 

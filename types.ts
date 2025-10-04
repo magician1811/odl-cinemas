@@ -75,3 +75,14 @@ export interface AuthUser {
   user: User;
   token: string;
 }
+
+// New type for movie reviews
+export interface Review {
+  id: string;
+  movieId: string;
+  userId: string;
+  userName: string;
+  rating: number; // 1-5
+  comment: string;
+  createdAt: string; // ISO
+}

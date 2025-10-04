@@ -88,10 +88,12 @@ const MoviesPage: React.FC = () => {
           
           return (
             <div key={movie.id} className="flex flex-col md:flex-row bg-gray-800/50 rounded-lg shadow-lg overflow-hidden">
-              <img src={movie.posterUrl} alt={movie.title} className="w-full md:w-48 h-64 md:h-auto object-cover" />
+              <Link to={`/movie/${movie.id}`}>
+                <img src={movie.posterUrl} alt={movie.title} className="w-full md:w-48 h-64 md:h-auto object-cover" />
+              </Link>
               <div className="p-6 flex flex-col justify-between flex-grow">
                 <div>
-                  <h2 className="text-3xl font-bold text-white mb-2">{movie.title}</h2>
+                  <Link to={`/movie/${movie.id}`}> <h2 className="text-3xl font-bold text-white mb-2">{movie.title}</h2></Link>
                   <p className="text-gray-400 mb-4">
                     {movie.genre} • {movie.duration} • {movie.censorRating}
                   </p>
