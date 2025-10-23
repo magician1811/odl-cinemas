@@ -20,7 +20,7 @@ const PaymentPage: React.FC = () => {
     );
   }
 
-  const handlePayment = (e: React.FormEvent) => {
+  const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
 
@@ -36,11 +36,21 @@ const PaymentPage: React.FC = () => {
       bookingTime: new Date().toISOString(),
     };
 
-    setTimeout(() => {
-      saveBooking(newBooking);
+    try {
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Save booking to Azure
+      await saveBooking(newBooking);
+      console.log('Booking saved successfully:', newBooking);
+      
       setCompletedBooking(newBooking);
       navigate('/confirmation');
-    }, 2000);
+    } catch (error) {
+      console.error('Error saving booking:', error);
+      alert('Failed to save booking. Please try again.');
+      setIsProcessing(false);
+    }
   };
 
   return (

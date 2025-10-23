@@ -24,9 +24,11 @@ const Header: React.FC = () => {
                   Admin
                 </Link>
               )}
-              <Link to="/dashboard" className="text-gray-300 hover:text-white transition duration-300">
-                My Bookings
-              </Link>
+              {!isAdmin && (
+                <Link to="/dashboard" className="text-gray-300 hover:text-white transition duration-300">
+                  My Bookings
+                </Link>
+              )}
               <span className="text-gray-300">Welcome, {user?.name}</span>
               <button
                 onClick={logout}

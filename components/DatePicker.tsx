@@ -41,34 +41,26 @@ const DatePicker: React.FC<DatePickerProps> = ({ dates, selectedDate, onDateSele
     <div className="mb-8">
       <h3 className="text-xl font-semibold text-white mb-4">Select Date</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-        {dates
-          .filter((movieDate) => {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); // start of today
-            const dateObj = new Date(movieDate.date);
-            dateObj.setHours(0, 0, 0, 0);
-            return dateObj >= today; // keep only today or future
-          })
-          .map((movieDate) => (
-            <button
-              key={movieDate.date}
-              onClick={() => onDateSelect(movieDate.date)}
-              className={`p-3 rounded-lg border-2 transition-all duration-200 ${
-                selectedDate === movieDate.date
-                  ? 'border-blue-500 bg-blue-600 text-white'
-                  : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500 hover:bg-gray-700'
-              }`}
-            >
-              <div className="text-center">
-                <div className="text-sm font-medium">
-                  {formatDate(movieDate.date)}
-                </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  {movieDate.showtimes.length} shows
-                </div>
+        {dates.map((movieDate) => (
+          <button
+            key={movieDate.date}
+            onClick={() => onDateSelect(movieDate.date)}
+            className={`p-3 rounded-lg border-2 transition-all duration-200 ${
+              selectedDate === movieDate.date
+                ? 'border-blue-500 bg-blue-600 text-white'
+                : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500 hover:bg-gray-700'
+            }`}
+          >
+            <div className="text-center">
+              <div className="text-sm font-medium">
+                {formatDate(movieDate.date)}
               </div>
-            </button>
-          ))}
+              <div className="text-xs text-gray-400 mt-1">
+                {movieDate.showtimes.length} shows
+              </div>
+            </div>
+          </button>
+        ))}
       </div>
       
       {selectedDate && (
